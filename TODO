@@ -1,1 +1,2 @@
 * Add tests
+* Supports output format except JSON (MessagePack, XML...)
