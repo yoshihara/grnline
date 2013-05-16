@@ -113,7 +113,7 @@ module GrnLine
 
       begin
         execute("status")
-      rescue Errno::EPIPE => e
+      rescue Errno::EPIPE
         $stderr.puts(@error.gets)
         exit(false)
       ensure
