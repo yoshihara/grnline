@@ -41,8 +41,9 @@ module GrnLine
         setup_interrupt_shutdown
 
         while(buffer = Readline.readline("groonga> ", true)) do
-          command = @command_parser.parse(buffer)
-          process_command(command)
+          @command_parser << buffer
+          process_command(@command_parser.command)
+          @command_parser.command = nil
         end
 
         shutdown_groonga
@@ -52,6 +53,7 @@ module GrnLine
     private
 
     def process_command(command)
+      return nil if command.nil?
       begin
         raw_response = execute(format(command))
         unless raw_response

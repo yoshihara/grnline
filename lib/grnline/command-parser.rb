@@ -6,12 +6,15 @@ require "groonga/command"
 
 module GrnLine
   class CommandParser
+
+    attr_accessor :command
+
     def initialize
       @command = nil
       @parser = generate_parser
     end
 
-    def parse(raw_input)
+    def <<(raw_input)
       @parser << "#{raw_input}\n"
       @command
     end
@@ -22,8 +25,18 @@ module GrnLine
         @command = command
       end
 
+      parser.on_load_columns do |command, columns|
+        @command[:columns] ||= columns.join(",")
+      end
+
+      values = []
+      parser.on_load_value do |_, value|
+        values << value
+      end
+
       parser.on_load_complete do |command|
         @command = command
+        @command[:values] ||= Yajl::Encoder.encode(values)
       end
 
       parser
