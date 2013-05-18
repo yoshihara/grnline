@@ -41,9 +41,7 @@ module GrnLine
         setup_interrupt_shutdown
 
         while(buffer = Readline.readline("groonga> ", true)) do
-          @command_parser << buffer
-          process_command(@command_parser.command)
-          @command_parser.command = nil
+          process_command(buffer)
         end
 
         shutdown_groonga
@@ -53,23 +51,33 @@ module GrnLine
     private
 
     def process_command(command)
-      return nil if command.nil?
+      return nil if command.empty?
+
+      raw_response = ""
+      count = 0
       begin
-        raw_response = execute(format(command))
-        unless raw_response
-          $stderr.puts(@error.gets)
-          exit(false)
+        @input.puts(command)
+        @input.flush
+
+        timeout = 1
+        while IO.select([@output], [], [], 1)
+          break if @output.eof?
+          read_content = @output.readpartial(1024)
+          raw_response << read_content
+          timeout = 0 if read_content.bytesize < 1024
         end
 
-        # TODO: support pretty print for formats except JSON
-        output_response(raw_response, :json)
-
-        rescue Errno::EPIPE => e
-        $stderr.puts("Failed to access the groonga database: #{e.message}")
-        exit(false)
+      rescue => e
+        raise("Failed to access the groonga database: #{e.message}")
       end
 
-      exit(true) if GROONGA_SHUTDOWN_COMMANDS.include?(command.name)
+      if raw_response.empty? and IO.select([@error], [], [], 0)
+        $stderr.puts(@error.read)
+      else
+        # TODO: support pretty print for formats except JSON
+        output_response(raw_response, :json)
+        exit(true) if GROONGA_SHUTDOWN_COMMANDS.include?(command)
+      end
     end
 
     def output_response(raw_response, response_type)
