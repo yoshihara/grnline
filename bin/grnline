@@ -3,4 +3,4 @@
 
 require "grnline"
 
-GrnLine::Wrapper.new.run(ARGV)
+exit(GrnLine::Wrapper.new.run(ARGV))

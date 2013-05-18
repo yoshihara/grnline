@@ -35,7 +35,9 @@ module GrnLine
       Open3.popen3(*groonga_commandline) do |input, output, error, _|
         @input, @output, @error = input, output, error
 
-        ensure_groonga_running
+        return true unless ensure_groonga_running
+        return false unless ensure_groonga_ready
+
         setup_interrupt_shutdown
 
         while(buffer = Readline.readline("groonga> ", true)) do
@@ -74,7 +76,7 @@ module GrnLine
       else
         # TODO: support pretty print for formats except JSON
         output_response(raw_response, :json)
-        exit(true) if GROONGA_SHUTDOWN_COMMANDS.include?(command)
+        return true if GROONGA_SHUTDOWN_COMMANDS.include?(command)
       end
     end
 
@@ -114,19 +116,23 @@ module GrnLine
     end
 
     def ensure_groonga_running
-      if IO.select([@output], nil, nil, 0.1) and not @output.eof?
+      if IO.select([@output], nil, nil, 1) and not @output.eof?
         puts(@output.read)
-        exit(true)
+        return false
       end
+      return true
+    end
 
+    def ensure_groonga_ready
       begin
         execute("status")
       rescue
         if IO.select([@error], [], [], 0)
           $stderr.puts(@error.read)
-          exit(false)
+          return false
         end
       end
+      return true
     end
   end
 end
