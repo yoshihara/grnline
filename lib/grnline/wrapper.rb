@@ -121,12 +121,9 @@ module GrnLine
 
       begin
         execute("status")
-      rescue Errno::EPIPE
-        $stderr.puts(@error.gets)
-        exit(false)
-      ensure
-        if @output.closed?
-          $stderr.puts(@error.gets)
+      rescue
+        if IO.select([@error], [], [], 0)
+          $stderr.puts(@error.read)
           exit(false)
         end
       end
