@@ -131,13 +131,5 @@ module GrnLine
         end
       end
     end
-
-    def format(command)
-      if command.original_source.start_with?("/d/")
-        command.to_uri_format
-      else
-        command.to_command_format
-      end
-    end
   end
 end
