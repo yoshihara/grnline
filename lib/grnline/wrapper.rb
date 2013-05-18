@@ -4,7 +4,6 @@ require "readline"
 require "json"
 require "open3"
 require "grnline/options-parser"
-require "grnline/command-parser"
 
 module GrnLine
   class Wrapper
@@ -24,7 +23,6 @@ module GrnLine
     end
 
     def initialize
-      @command_parser = GrnLine::CommandParser.new
       @options_parser = GrnLine::OptionsParser.new
 
       setup_input_completion
