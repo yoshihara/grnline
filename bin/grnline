@@ -3,4 +3,5 @@
 
 require "grnline"
 
-exit(GrnLine::Wrapper.new.run(ARGV))
+exit_status = GrnLine::Wrapper.new.run(ARGV) || true
+exit(exit_status)
