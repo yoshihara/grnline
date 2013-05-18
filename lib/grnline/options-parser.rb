@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 require "grnline/version"
+require "ostruct"
+require "optparse"
 
 module GrnLine
   class OptionsParser
