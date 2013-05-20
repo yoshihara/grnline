@@ -62,7 +62,7 @@ module GrnLine
         @input.flush
 
         timeout = 1
-        while IO.select([@output], [], [], 1)
+        while IO.select([@output], [], [], timeout)
           break if @output.eof?
           read_content = @output.readpartial(1024)
           raw_response << read_content
