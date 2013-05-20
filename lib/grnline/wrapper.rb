@@ -73,9 +73,7 @@ module GrnLine
         raise("Failed to access the groonga database: #{e.message}")
       end
 
-      if raw_response.empty? and IO.select([@error], [], [], 0)
-        $stderr.puts(@error.read)
-      else
+      unless raw_response.empty?
         # TODO: support pretty print for formats except JSON
         output_response(raw_response, :json)
         return true if GROONGA_SHUTDOWN_COMMANDS.include?(command)
