@@ -23,15 +23,11 @@ module GrnLine
     end
 
     def initialize
-      @options_parser = GrnLine::OptionsParser.new
-
       setup_input_completion
     end
 
     def run(argv)
-      options = @options_parser.parse(argv)
-      groonga_commandline = options.groonga_arguments.unshift(options.groonga)
-
+      groonga_commandline = generate_groonga_commandline(argv)
       Open3.popen3(*groonga_commandline) do |input, output, error, _|
         @input, @output, @error = input, output, error
 
@@ -49,6 +45,12 @@ module GrnLine
     end
 
     private
+
+    def generate_groonga_commandline(argv)
+      options_parser = GrnLine::OptionsParser.new
+      options = options_parser.parse(argv)
+      options.groonga_arguments.unshift(options.groonga)
+    end
 
     def process_command(command)
       return nil if command.empty?
