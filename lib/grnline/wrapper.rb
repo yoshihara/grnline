@@ -55,20 +55,12 @@ module GrnLine
     def process_command(command)
       return nil if command.empty?
 
-      raw_response = ""
+      raw_response = nil
       count = 0
       begin
         @input.puts(command)
         @input.flush
-
-        timeout = 1
-        while IO.select([@output], [], [], timeout)
-          break if @output.eof?
-          read_content = @output.readpartial(1024)
-          raw_response << read_content
-          timeout = 0 if read_content.bytesize < 1024
-        end
-
+        raw_response = read_groonga_response
       rescue => e
         raise("Failed to access the groonga database: #{e.message}")
       end
@@ -78,6 +70,19 @@ module GrnLine
         output_response(raw_response, :json)
         return true if GROONGA_SHUTDOWN_COMMANDS.include?(command)
       end
+    end
+
+    def read_groonga_response
+      response = ""
+      timeout = 1
+      while IO.select([@output], [], [], timeout)
+        break if @output.eof?
+        read_content = @output.readpartial(1024)
+        response << read_content
+        timeout = 0 if read_content.bytesize < 1024
+      end
+
+      response
     end
 
     def output_response(raw_response, response_type)
