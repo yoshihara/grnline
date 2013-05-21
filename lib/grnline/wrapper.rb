@@ -58,7 +58,6 @@ module GrnLine
       return nil if command.empty?
 
       raw_response = nil
-      count = 0
       begin
         raw_response = read_groonga_response(command)
       rescue => e
