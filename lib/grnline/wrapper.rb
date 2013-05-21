@@ -58,9 +58,7 @@ module GrnLine
       raw_response = nil
       count = 0
       begin
-        @input.puts(command)
-        @input.flush
-        raw_response = read_groonga_response
+        raw_response = read_groonga_response(command)
       rescue => e
         raise("Failed to access the groonga database: #{e.message}")
       end
@@ -72,7 +70,10 @@ module GrnLine
       end
     end
 
-    def read_groonga_response
+    def read_groonga_response(command)
+      @input.puts(command)
+      @input.flush
+
       response = ""
       timeout = 1
       while IO.select([@output], [], [], timeout)
