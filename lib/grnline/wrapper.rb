@@ -55,8 +55,6 @@ module GrnLine
     end
 
     def process_command(command)
-      return nil if command.empty?
-
       raw_response = nil
       begin
         raw_response = read_groonga_response(command)
@@ -64,7 +62,7 @@ module GrnLine
         raise("Failed to access the groonga database: #{e.message}")
       end
 
-      unless raw_response.empty?
+      if raw_response and not raw_response.empty?
         # TODO: support pretty print for formats except JSON
         output_response(raw_response, :json)
         return true if GROONGA_SHUTDOWN_COMMANDS.include?(command)
@@ -74,10 +72,12 @@ module GrnLine
     end
 
     def read_groonga_response(command)
+      return nil if command.empty?
+      response = ""
+
       @input.puts(command)
       @input.flush
 
-      response = ""
       timeout = 1
       while IO.select([@output], [], [], timeout)
         break if @output.eof?
