@@ -36,10 +36,9 @@ module GrnLine
 
         setup_interrupt_shutdown
 
-        while(buffer = Readline.readline("groonga> ", true)) do
-          if process_command(buffer)
-            exit(true)
-          end
+        while(command = Readline.readline("groonga> ", true)) do
+          process_command(command)
+          exit(true) if GROONGA_SHUTDOWN_COMMANDS.include?(command)
         end
 
         shutdown_groonga
@@ -65,10 +64,7 @@ module GrnLine
       if raw_response and not raw_response.empty?
         # TODO: support pretty print for formats except JSON
         output_response(raw_response, :json)
-        return true if GROONGA_SHUTDOWN_COMMANDS.include?(command)
       end
-
-      return nil
     end
 
     def read_groonga_response(command)
