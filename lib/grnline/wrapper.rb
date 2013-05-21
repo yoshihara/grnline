@@ -37,7 +37,9 @@ module GrnLine
         setup_interrupt_shutdown
 
         while(buffer = Readline.readline("groonga> ", true)) do
-          process_command(buffer)
+          if process_command(buffer)
+            exit(true)
+          end
         end
 
         shutdown_groonga
@@ -68,6 +70,8 @@ module GrnLine
         output_response(raw_response, :json)
         return true if GROONGA_SHUTDOWN_COMMANDS.include?(command)
       end
+
+      return nil
     end
 
     def read_groonga_response(command)
