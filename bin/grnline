@@ -3,6 +3,6 @@
 
 require "grnline"
 
-exit_status = true
 exit_status = GrnLine::Wrapper.new.run(ARGV)
+exit_status = true if exit_status.nil?
 exit(exit_status)
