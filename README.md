@@ -5,7 +5,7 @@
 GrnLine is the wrapper for the interactive mode of [groonga](http://groonga.org/).
 
 GrnLine is created by Ruby.
-This uses (grnwrap)[https://github.com/michisu/grnwrap] as a
+This uses [grnwrap](https://github.com/michisu/grnwrap) as a
 reference. grnwrap is created by Python.
 
 ## Installation
