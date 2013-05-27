@@ -23,11 +23,14 @@ module GrnLine
     end
 
     def initialize
+      @options = nil
       setup_input_completion
     end
 
     def run(argv)
-      groonga_commandline = generate_groonga_commandline(argv)
+      @options = parse_commandline_options(argv)
+      groonga_commandline = generate_groonga_commandline
+
       Open3.popen3(*groonga_commandline) do |input, output, error, _|
         @input, @output, @error = input, output, error
 
@@ -47,10 +50,13 @@ module GrnLine
 
     private
 
-    def generate_groonga_commandline(argv)
+    def parse_commandline_options(argv)
       options_parser = GrnLine::OptionsParser.new
-      options = options_parser.parse(argv)
-      options.groonga_arguments.unshift(options.groonga)
+      options_parser.parse(argv)
+    end
+
+    def generate_groonga_commandline
+      [@options.groonga, *@options.groonga_arguments]
     end
 
     def process_command(command)
@@ -89,10 +95,16 @@ module GrnLine
       # TODO: support pretty print for formats except JSON
       case response_type
       when :json
-        response = JSON.parse(raw_response)
-        puts(JSON.pretty_generate(response))
+        response = JSON.pretty_generate(JSON.parse(raw_response))
       else
-        puts(raw_response)
+        response = raw_response
+      end
+      if @options.output.instance_of?(String)
+        File.open(@options.output, "w") do |file|
+          file.puts(response)
+        end
+      else
+        @options.output.puts(response)
       end
     end
 

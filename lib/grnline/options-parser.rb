@@ -11,6 +11,7 @@ module GrnLine
       @options.groonga = "groonga"
       @options.pager = "less"
       @options.groonga_arguments = []
+      @options.output = $stdout
     end
 
     def parse(argv)
@@ -42,6 +43,10 @@ module GrnLine
       #           "your pager using to display results.") do |pager|
       #   @options.pager = pager
       # end
+
+      parser.on("--output=OUTPUT", "Output responses from groonga.") do |output|
+        @options.output = output
+      end
 
       parser.on("-v", "--version", "Show version and exit.") do
         puts(GrnLine::VERSION)
