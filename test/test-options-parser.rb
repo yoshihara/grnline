@@ -10,7 +10,7 @@ class OptionsParserTest < Test::Unit::TestCase
 
   def test_separator_in_both_arguments
     groonga_arguments = ["-n", "db/db"]
-    argv =  groonga_arguments + @separator + ["--output", "output_path"]
+    argv = groonga_arguments + @separator + ["--output", "output_path"]
     options = @parser.parse(argv)
 
     assert_options(options,
