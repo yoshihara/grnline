@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-require 'rubygems/package_task'
-require 'bundler/gem_helper'
 
 base_dir = File.join(File.dirname(__FILE__))
 lib_dir = File.join(base_dir, "lib")
@@ -12,4 +10,11 @@ helper.install
 def helper.version_tag
   version
 end
+
+desc "Run tests."
+task :test do
+  ruby("test/run-test.rb")
+end
+
+task :default => :test
 
