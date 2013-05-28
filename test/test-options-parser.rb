@@ -43,7 +43,7 @@ class OptionsParserTest < Test::Unit::TestCase
     output = expected_options[:output] || $stdout
     groonga_arguments = expected_options[:groonga_arguments] || []
 
-    assert_equal(options.output, output)
-    assert_equal(options.groonga_arguments, groonga_arguments)
+    assert_equal(output, options.output)
+    assert_equal(groonga_arguments, options.groonga_arguments)
   end
 end
