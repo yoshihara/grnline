@@ -69,7 +69,7 @@ module GrnLine
 
       if raw_response and not raw_response.empty?
         # TODO: support pretty print for formats except JSON
-        output_response(raw_response, :json)
+        output_response(raw_response)
       end
     end
 
@@ -91,14 +91,14 @@ module GrnLine
       response
     end
 
-    def output_response(raw_response, response_type)
+    def output_response(raw_response)
       # TODO: support pretty print for formats except JSON
-      case response_type
-      when :json
-        response = JSON.pretty_generate(JSON.parse(raw_response))
-      else
-        response = raw_response
+      response = raw_response
+      begin
+        response = JSON.pretty_generate(JSON.parse(response))
+      rescue
       end
+
       if @options.output.instance_of?(String)
         File.open(@options.output, "w") do |file|
           file.puts(response)
