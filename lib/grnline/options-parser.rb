@@ -15,6 +15,7 @@ module GrnLine
       @options.pager = "less"
       @options.groonga_arguments = []
       @options.output = $stdout
+      @options.pretty_print = true
     end
 
     def parse(argv)
@@ -54,6 +55,11 @@ module GrnLine
 
       parser.on("-g", "--groonga=GROONGA", "your groonga.") do |groonga|
         @options.groonga = groonga
+      end
+
+      parser.on("-p", "--[no-]pretty-print",
+                "Pretty print responses from groonga.") do |pretty_print|
+        @options.pretty_print = pretty_print
       end
 
       # TODO: supports pager for displaying results from groonga

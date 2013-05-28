@@ -8,6 +8,13 @@ class OptionsParserTest < Test::Unit::TestCase
     @separator = [GrnLine::OptionsParser::SEPARATOR]
   end
 
+  def test_pretty_print
+    argv = @separator + ["--no-pretty-print"]
+    options = @parser.parse(argv)
+
+    assert_options(options, :pretty_print => false)
+  end
+
   def test_separator_in_both_arguments
     groonga_arguments = ["-n", "db/db"]
     argv = groonga_arguments + @separator + ["--output", "output_path"]
@@ -42,8 +49,11 @@ class OptionsParserTest < Test::Unit::TestCase
   def assert_options(options, expected_options)
     output = expected_options[:output] || $stdout
     groonga_arguments = expected_options[:groonga_arguments] || []
+    pretty_print = expected_options[:pretty_print]
+    pretty_print = true if pretty_print.nil?
 
     assert_equal(output, options.output)
     assert_equal(groonga_arguments, options.groonga_arguments)
+    assert_equal(pretty_print, options.pretty_print)
   end
 end
