@@ -6,6 +6,9 @@ require "optparse"
 
 module GrnLine
   class OptionsParser
+
+    SEPARATOR = "--"
+
     def initialize
       @options = OpenStruct.new
       @options.groonga = "groonga"
@@ -16,16 +19,29 @@ module GrnLine
 
     def parse(argv)
       parser = generate_parser
-      separator_index = argv.index("--")
-      if separator_index.nil?
+
+      if not argv.include?(SEPARATOR)
         @options.groonga_arguments = argv
-      elsif separator_index.zero?
-        parser.parse!(argv[1..-1])
       else
-        @options.groonga_arguments = argv[0..(separator_index - 1)]
-        parser.parse!(argv[(separator_index + 1)..-1])
+        grnline_arguments, groonga_arguments = split_arguments(argv)
+
+        parser.parse!(grnline_arguments)
+        @options.groonga_arguments = groonga_arguments
       end
       @options
+    end
+
+    def split_arguments(argv)
+      grnline_arguments = []
+      groonga_arguments = []
+      separator_index = argv.index(SEPARATOR)
+
+      unless separator_index.zero?
+        groonga_arguments = argv[0 .. (separator_index - 1)]
+      end
+      grnline_arguments = argv[(separator_index + 1) .. -1]
+
+      [grnline_arguments, groonga_arguments]
     end
 
     def generate_parser
