@@ -17,7 +17,9 @@ module GrnLine
     def parse(argv)
       parser = generate_parser
       separator_index = argv.index("--")
-      if separator_index
+      if separator_index.zero?
+        parser.parse!(argv[1..-1])
+      elsif separator_index
         @options.groonga_arguments = argv[0..(separator_index - 1)]
         parser.parse!(argv[(separator_index + 1)..-1])
       else
