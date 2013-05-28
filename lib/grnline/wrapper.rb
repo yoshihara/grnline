@@ -7,6 +7,8 @@ require "grnline/options-parser"
 
 module GrnLine
   class Wrapper
+    attr_accessor :options
+
     GROONGA_COMMANDS = [
       "cache_limit", "check", "clearlock", "column_create", "column_list",
       "column_remove", "column_rename", "define_selector", "defrag",
@@ -94,9 +96,11 @@ module GrnLine
     def output_response(raw_response)
       # TODO: support pretty print for formats except JSON
       response = raw_response
-      begin
-        response = JSON.pretty_generate(JSON.parse(response))
-      rescue
+      if @options.pretty_print
+        begin
+          response = JSON.pretty_generate(JSON.parse(response))
+        rescue
+        end
       end
 
       if @options.output.instance_of?(String)
