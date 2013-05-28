@@ -17,13 +17,13 @@ module GrnLine
     def parse(argv)
       parser = generate_parser
       separator_index = argv.index("--")
-      if separator_index.zero?
+      if separator_index.nil?
+        @options.groonga_arguments = argv
+      elsif separator_index.zero?
         parser.parse!(argv[1..-1])
-      elsif separator_index
+      else
         @options.groonga_arguments = argv[0..(separator_index - 1)]
         parser.parse!(argv[(separator_index + 1)..-1])
-      else
-        @options.groonga_arguments = argv
       end
       @options
     end
