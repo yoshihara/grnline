@@ -5,7 +5,7 @@ require "grnline/options-parser"
 class OptionsParserTest < Test::Unit::TestCase
   def setup
     @parser = GrnLine::OptionsParser.new
-    @separator = ["--"]
+    @separator = [GrnLine::OptionsParser::SEPARATOR]
   end
 
   def test_separator_in_both_arguments
