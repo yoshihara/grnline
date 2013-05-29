@@ -52,12 +52,15 @@ module GrnLine
                  " grnline_options :"
       parser.banner = banner
 
-      parser.on("-g", "--groonga=GROONGA", "your groonga.") do |groonga|
+      parser.on("-g", "--groonga=GROONGA",
+                "your groonga.",
+                "(#{@options.groonga})") do |groonga|
         @options.groonga = groonga
       end
 
       parser.on("-p", "--[no-]pretty-print",
-                "Pretty print responses from groonga.") do |pretty_print|
+                "Pretty print responses from groonga.",
+                "(#{@options.pretty_print})") do |pretty_print|
         @options.pretty_print = pretty_print
       end
 
@@ -67,7 +70,9 @@ module GrnLine
       #   @options.pager = pager
       # end
 
-      parser.on("--output=OUTPUT", "Output responses from groonga.") do |output|
+      parser.on("--output=OUTPUT",
+                "Output responses from groonga.",
+                "(STDOUT)") do |output|
         @options.output = output
       end
 
