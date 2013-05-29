@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
+
+require "optparse"
+
+repository_path = nil
+
+options_parser = OptionParser.new
+banner = <<BANNER
+Usage: #{$0} --repository=/path/to/groonga
+       This commands Extracts groonga commands from the source in
+       groonga repository.
+       Now, groonga commands are defined in proc.c with
+       'DEF_COMMAND()' macro.
+       The extracted commands are pretty printed like Array.
+
+Options:
+BANNER
+options_parser.banner = banner
+
+options_parser.on("--repository=REPOSITORY",
+                  "Path to a repository of groonga.") do |repository|
+  repository_path = repository
+end
+
+options_parser.on_tail("-h", "--help", "Show this message and exit.") do
+  puts(options_parser.help)
+  exit(true)
+end
+
+options_parser.parse!(ARGV)
+
+exit(false) unless repository_path
+
+proc_path = File.join(repository_path, "lib", "proc.c")
+source = File.read(proc_path)
+commands = []
+
+source.each_line do |line|
+  commands << $1 if /DEF_COMMAND\("(.+)".+/ =~ line
+end
+
+puts "[\"#{commands.join('", "')}\"]"
