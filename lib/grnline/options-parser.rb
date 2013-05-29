@@ -71,7 +71,7 @@ module GrnLine
       # end
 
       parser.on("--output=OUTPUT",
-                "Output responses from groonga.",
+                "Destination to output responses from groonga.",
                 "(STDOUT)") do |output|
         @options.output = output
       end
