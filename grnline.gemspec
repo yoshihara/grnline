@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.description   = description
   spec.license       = "MIT"
 
-  spec.files = ["README.md", "LICENSE.txt"]
+  spec.files = ["README.md", "LICENSE.txt", "TODO"]
   spec.files += ["Rakefile", "Gemfile", "grnline.gemspec"]
   spec.files += Dir.glob("lib/**/*.rb")
   spec.files += Dir.glob("doc/text/*.*")
