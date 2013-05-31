@@ -10,9 +10,9 @@ reference. grnwrap is created by Python.
 
 ## Installation
 
-TODO.
-
-(In the future, ```$ gem install grnline```)
+```
+$ gem install grnline
+```
 
 ## Usage
 
