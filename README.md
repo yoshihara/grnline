@@ -22,6 +22,7 @@ you execute groonga with a new database:
     $ grnline -n <groonga-db>
 
 Then, grnline has the own options. Please see ```grnline -- -h```.
+When you want to know groonga's options, please type ```grnline -h```.
 
 ## Author
 
