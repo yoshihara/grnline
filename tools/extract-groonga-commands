@@ -40,4 +40,4 @@ source.each_line do |line|
   commands << $1 if /DEF_COMMAND\("(.+)".+/ =~ line
 end
 
-puts "[\"#{commands.join('", "')}\"]"
+puts "[\"#{commands.sort.join('", "')}\"]"
