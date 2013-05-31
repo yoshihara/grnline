@@ -13,8 +13,9 @@ module GrnLine
       "cache_limit", "check", "clearlock", "column_create", "column_list",
       "column_remove", "column_rename", "define_selector", "defrag",
       "delete", "dump", "load", "log_level", "log_put", "log_reopen",
-      "quit", "register", "select", "shutdown", "status", "table_create",
-      "table_list", "table_remove", "table_rename", "truncate"
+      "normalize", "quit", "register", "select", "shutdown", "status",
+      "table_create", "table_list", "table_remove", "table_rename",
+      "tokenize", "truncate"
     ]
     GROONGA_SHUTDOWN_COMMANDS = ["quit", "shutdown"]
 
