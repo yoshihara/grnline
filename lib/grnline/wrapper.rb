@@ -97,7 +97,7 @@ module GrnLine
     def output_response(raw_response)
       # TODO: support pretty print for formats except JSON
       response = raw_response
-      if @options.pretty_print
+      if @options.use_pretty_print
         begin
           response = JSON.pretty_generate(JSON.parse(response))
         rescue

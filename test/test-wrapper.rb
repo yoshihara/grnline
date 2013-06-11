@@ -13,7 +13,7 @@ class TestWrapper < Test::Unit::TestCase
 
   class OutputResponseTest < self
     def test_prerry_print
-      @grnline.options.pretty_print = true
+      @grnline.options.use_pretty_print = true
       @grnline.options.output = @output
 
       @grnline.send(:output_response, raw_response)
@@ -21,7 +21,7 @@ class TestWrapper < Test::Unit::TestCase
     end
 
     def test_no_prerry_print
-      @grnline.options.pretty_print = false
+      @grnline.options.use_pretty_print = false
       @grnline.options.output = @output
 
       @grnline.send(:output_response, raw_response)

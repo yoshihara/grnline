@@ -12,7 +12,7 @@ class OptionsParserTest < Test::Unit::TestCase
     argv = @separator + ["--no-pretty-print"]
     options = @parser.parse(argv)
 
-    assert_options(options, :pretty_print => false)
+    assert_options(options, :use_pretty_print => false)
   end
 
   def test_separator_in_both_arguments
@@ -49,11 +49,11 @@ class OptionsParserTest < Test::Unit::TestCase
   def assert_options(options, expected_options)
     output = expected_options[:output] || $stdout
     groonga_arguments = expected_options[:groonga_arguments] || []
-    pretty_print = expected_options[:pretty_print]
-    pretty_print = true if pretty_print.nil?
+    use_pretty_print = expected_options[:use_pretty_print]
+    use_pretty_print = true if use_pretty_print.nil?
 
     assert_equal(output, options.output)
     assert_equal(groonga_arguments, options.groonga_arguments)
-    assert_equal(pretty_print, options.pretty_print)
+    assert_equal(use_pretty_print, options.use_pretty_print)
   end
 end
