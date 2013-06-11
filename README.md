@@ -1,5 +1,7 @@
 # Grnline
 
+[![Build Status](https://travis-ci.org/yoshihara/grnline.png?branch=master)](https://travis-ci.org/yoshihara/grnline)
+
 ## Description
 
 GrnLine is the wrapper for the interactive mode of [groonga](http://groonga.org/).
