@@ -104,12 +104,16 @@ module GrnLine
         end
       end
 
+      output(response)
+    end
+
+    def output(object)
       if @options.output.instance_of?(String)
         File.open(@options.output, "w") do |file|
-          file.puts(response)
+          file.puts(object)
         end
       else
-        @options.output.puts(response)
+        @options.output.puts(object)
       end
     end
 
@@ -139,7 +143,7 @@ module GrnLine
 
     def ensure_groonga_running
       if IO.select([@output], nil, nil, 1) and not @output.eof?
-        puts(@output.read)
+        output(@output.read)
         return false
       end
       return true
