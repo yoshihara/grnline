@@ -8,6 +8,7 @@ lib_dir = File.join(base_dir, "lib")
 test_dir = File.join(base_dir, "test")
 
 require "test-unit"
+require "test/unit/rr"
 require "test/unit/notify"
 
 $LOAD_PATH.unshift(lib_dir)

@@ -42,12 +42,13 @@ module GrnLine
 
         setup_interrupt_shutdown
 
+        command = nil
         while(command = Readline.readline("groonga> ", true)) do
           process_command(command)
-          exit(true) if GROONGA_SHUTDOWN_COMMANDS.include?(command)
+          break if GROONGA_SHUTDOWN_COMMANDS.include?(command)
         end
 
-        shutdown_groonga
+        shutdown_groonga unless GROONGA_SHUTDOWN_COMMANDS.include?(command)
       end
     end
 
