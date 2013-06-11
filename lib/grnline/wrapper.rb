@@ -49,6 +49,7 @@ module GrnLine
         end
 
         shutdown_groonga unless GROONGA_SHUTDOWN_COMMANDS.include?(command)
+        true
       end
     end
 
