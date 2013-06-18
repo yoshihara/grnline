@@ -33,6 +33,12 @@ module GrnLine
       "--value_type", "--values"
     ]
 
+    GROONGA_FUNCTIONS = [
+      "all_records", "edit_distance", "geo_distance", "geo_distance2",
+      "geo_distance3", "geo_in_circle", "geo_in_rectangle", "max",
+      "min", "now", "query", "rand", "snippet_html", "sub_filter"
+    ]
+
     GROONGA_SHUTDOWN_COMMANDS = ["quit", "shutdown"]
 
     class << self
@@ -156,7 +162,8 @@ module GrnLine
     def setup_input_completion
       Readline.completion_proc = lambda do |word|
         GROONGA_COMMANDS.grep(/\A#{Regexp.escape(word)}/) +
-          GROONGA_VARIABLES.grep(/\A#{Regexp.escape(word)}/)
+          GROONGA_VARIABLES.grep(/\A#{Regexp.escape(word)}/) +
+          GROONGA_FUNCTIONS.grep(/\A#{Regexp.escape(word)}/)
       end
     end
 

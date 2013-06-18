@@ -44,6 +44,8 @@ source.each_line do |line|
     commands << $1
   when /\s+DEF_VAR\(vars\[\d+\], "(.+)"\);/
     variables << $1
+  when /\s+.+grn_proc_create\(ctx, "(.+)", .+,/
+    functions << $1
   end
 end
 
@@ -53,3 +55,4 @@ end
 
 puts pretty_print[commands]
 puts pretty_print[variables.collect {|variable| "--#{variable}"}]
+puts pretty_print[functions]
