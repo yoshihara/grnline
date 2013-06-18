@@ -17,6 +17,22 @@ module GrnLine
       "table_create", "table_list", "table_remove", "table_rename",
       "tokenize", "truncate"
     ]
+
+    GROONGA_VARIABLES = [
+      "--cache", "--columns", "--default_tokenizer", "--drilldown",
+      "--drilldown_limit", "--drilldown_offset",
+      "--drilldown_output_columns", "--drilldown_sortby", "--each",
+      "--filter", "--flags", "--id", "--ifexists", "--input_type",
+      "--key", "--key_type", "--level", "--limit", "--match_columns",
+      "--match_escalation_threshold", "--max", "--message", "--name",
+      "--new_name", "--normalizer", "--obj", "--offset",
+      "--output_columns", "--path", "--query", "--query_expander",
+      "--query_expansion", "--query_flags", "--scorer", "--seed",
+      "--sortby", "--source", "--string", "--table", "--tables",
+      "--target_name", "--threshold", "--tokenizer", "--type",
+      "--value_type", "--values"
+    ]
+
     GROONGA_SHUTDOWN_COMMANDS = ["quit", "shutdown"]
 
     class << self
@@ -139,7 +155,8 @@ module GrnLine
 
     def setup_input_completion
       Readline.completion_proc = lambda do |word|
-        GROONGA_COMMANDS.grep(/\A#{Regexp.escape(word)}/)
+        GROONGA_COMMANDS.grep(/\A#{Regexp.escape(word)}/) +
+          GROONGA_VARIABLES.grep(/\A#{Regexp.escape(word)}/)
       end
     end
 

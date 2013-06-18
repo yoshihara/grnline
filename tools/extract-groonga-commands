@@ -35,9 +35,21 @@ exit(false) unless repository_path
 proc_path = File.join(repository_path, "lib", "proc.c")
 source = File.read(proc_path)
 commands = []
+variables = []
+functions = []
 
 source.each_line do |line|
-  commands << $1 if /DEF_COMMAND\("(.+)".+/ =~ line
+  case line
+  when /\s+DEF_COMMAND\("(.+)".+/
+    commands << $1
+  when /\s+DEF_VAR\(vars\[\d+\], "(.+)"\);/
+    variables << $1
+  end
 end
 
-puts "[\"#{commands.sort.join('", "')}\"]"
+pretty_print = ->(words) do
+  "[\"#{words.uniq.sort.join('", "')}\"]"
+end
+
+puts pretty_print[commands]
+puts pretty_print[variables.collect {|variable| "--#{variable}"}]
