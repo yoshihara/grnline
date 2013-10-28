@@ -170,9 +170,7 @@ module GrnLine
 
     def setup_input_completion
       Readline.completion_proc = lambda do |word|
-        GROONGA_COMMANDS.grep(/\A#{Regexp.escape(word)}/) +
-          GROONGA_VARIABLES.grep(/\A#{Regexp.escape(word)}/) +
-          GROONGA_FUNCTIONS.grep(/\A#{Regexp.escape(word)}/)
+        (GROONGA_COMMANDS + GROONGA_VARIABLES + GROONGA_FUNCTIONS).grep(/\A#{Regexp.escape(word)}/)
       end
     end
 
