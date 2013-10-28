@@ -4,6 +4,7 @@ require "readline"
 require "json"
 require "open3"
 require "grnline/options-parser"
+require "grnline/history"
 
 module GrnLine
   class Wrapper
@@ -41,6 +42,8 @@ module GrnLine
 
     GROONGA_SHUTDOWN_COMMANDS = ["quit", "shutdown"]
 
+    HISTORY_FILE = "#{ENV["HOME"]}/.grnline-history"
+
     class << self
       def run(argv)
         new.run(argv)
@@ -49,6 +52,7 @@ module GrnLine
 
     def initialize
       @options = nil
+      @history = GrnLine::History.new(HISTORY_FILE)
       setup_input_completion
     end
 
@@ -65,12 +69,16 @@ module GrnLine
         setup_interrupt_shutdown
 
         command = nil
+        @history.load
+
         while(command = Readline.readline("groonga> ", true)) do
+          @history.store(Readline::HISTORY.to_a.last)
           process_command(command)
           break if GROONGA_SHUTDOWN_COMMANDS.include?(command)
         end
 
         shutdown_groonga unless GROONGA_SHUTDOWN_COMMANDS.include?(command)
+        @history.save
         true
       end
     end
@@ -155,6 +163,7 @@ module GrnLine
     def setup_interrupt_shutdown
       trap("INT") do
         shutdown_groonga
+        @history.save
         exit(true)
       end
     end
