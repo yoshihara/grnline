@@ -66,7 +66,7 @@ class TestWrapper < Test::Unit::TestCase
     def test_running
       description = "The_quit_commands_exits_running_groonga."
       argv = generate_argv([])
-      mock(Readline).readline("groonga> ", true) do
+      mock(Readline).readline("> ", true) do
         "quit"
       end
       mock(@grnline).process_command("quit") do

@@ -53,6 +53,7 @@ module GrnLine
     def initialize
       @options = nil
       @history = GrnLine::History.new(HISTORY_FILE)
+      @commandline_prefix = ""
       setup_input_completion
     end
 
@@ -71,7 +72,7 @@ module GrnLine
         command = nil
         @history.load
 
-        while(command = Readline.readline("> ", true)) do
+        while(command = Readline.readline("#{@commandline_prefix}> ", true)) do
           @history.store(Readline::HISTORY.to_a.last)
           process_command(command)
           break if GROONGA_SHUTDOWN_COMMANDS.include?(command)
@@ -104,7 +105,10 @@ module GrnLine
 
       if raw_response and not raw_response.empty?
         # TODO: support pretty print for formats except JSON
+        @commandline_prefix = ""
         output_response(raw_response)
+      else
+        @commandline_prefix = "*"
       end
     end
 
