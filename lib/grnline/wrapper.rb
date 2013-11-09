@@ -71,7 +71,7 @@ module GrnLine
         command = nil
         @history.load
 
-        while(command = Readline.readline("groonga> ", true)) do
+        while(command = Readline.readline("> ", true)) do
           @history.store(Readline::HISTORY.to_a.last)
           process_command(command)
           break if GROONGA_SHUTDOWN_COMMANDS.include?(command)
