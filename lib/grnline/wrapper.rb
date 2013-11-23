@@ -42,7 +42,7 @@ module GrnLine
 
     GROONGA_SHUTDOWN_COMMANDS = ["quit", "shutdown"]
 
-    HISTORY_FILE = "#{ENV["HOME"]}/.grnline-history"
+    HISTORY_FILE = File.join(ENV["HOME"], ".grnline-history")
 
     class << self
       def run(argv)
