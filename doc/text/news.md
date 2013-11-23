@@ -1,5 +1,19 @@
 # News
 
+## <a id="0-0-3">0.0.3</a>: 2013-11-23
+
+### Improvements
+
+* Showed the build status image in Travis-CI.
+* Added groonga's command parameters (e.g. "--name", "--table", "--output_columns"...) to the completion list.
+* Added groonga's function (e.g. "now", "rand", "geo_distance"...) to the completion list.
+* Supported command history. It is stored to the file "ENV['HOME']/.grnline-history".
+* Added "*" in command-line prefix when you typed a continuous command.
+
+### Changes
+
+* Removed "groonga" string from command-line prefix.
+
 ## <a id="0-0-2">0.0.2</a>: 2013-05-31
 
 ### Improvements
