@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 require "readline"
-require "json"
+require "lazy-pp-json"
 require "open3"
 require "grnline/options-parser"
 require "grnline/history"
@@ -135,7 +135,7 @@ module GrnLine
       response = raw_response
       if @options.use_pretty_print
         begin
-          response = JSON.pretty_generate(JSON.parse(response))
+          response = Lazy::PP::JSON.new(response)
         rescue
         end
       end
@@ -144,13 +144,20 @@ module GrnLine
     end
 
     def output(object)
+      output = nil
       if @options.output.instance_of?(String)
-        File.open(@options.output, "w") do |file|
-          file.puts(object)
-        end
+        output = File.open(@options.output, "w")
       else
-        @options.output.puts(object)
+        output = @options.output
       end
+
+      if object.instance_of?(Lazy::PP::JSON)
+        PP.pp(object, output)
+      else
+        output.puts(object)
+      end
+
+      output.close if output.instance_of?(File)
     end
 
     def execute(command)

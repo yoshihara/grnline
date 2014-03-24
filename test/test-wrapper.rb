@@ -117,15 +117,15 @@ class TestWrapper < Test::Unit::TestCase
     9.20295715332031e-05
   ],
   {
-    "alloc_count": 129,
-    "starttime": 1369743522,
-    "uptime": 3,
-    "version": "3.0.1",
-    "n_queries": 0,
-    "cache_hit_rate": 0.0,
-    "command_version": 1,
-    "default_command_version": 1,
-    "max_command_version": 2
+    "alloc_count"            :129,
+    "starttime"              :1369743522,
+    "uptime"                 :3,
+    "version"                :"3.0.1",
+    "n_queries"              :0,
+    "cache_hit_rate"         :0.0,
+    "command_version"        :1,
+    "default_command_version":1,
+    "max_command_version"    :2
   }
 ]
     RESPONSE
