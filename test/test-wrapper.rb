@@ -111,11 +111,7 @@ class TestWrapper < Test::Unit::TestCase
   def pretty_response
     <<-RESPONSE
 [
-  [
-    0,
-    1369743525.62977,
-    9.20295715332031e-05
-  ],
+  [0, 1369743525.62977, 9.20295715332031e-05],
   {
     "alloc_count"            :129,
     "starttime"              :1369743522,
