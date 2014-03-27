@@ -4,7 +4,7 @@
 
 ## Description
 
-GrnLine is the wrapper for the interactive mode of [groonga](http://groonga.org/).
+GrnLine is the wrapper for the interactive mode of [Groonga](http://groonga.org/).
 
 Grnline is created by Ruby.
 This uses [grnwrap](https://github.com/michisu/grnwrap) as a
@@ -18,13 +18,13 @@ $ gem install grnline
 
 ## Usage
 
-You can use the options of groonga as ones for Grnline. For example,
-you execute groonga with a new database:
+You can use the options of Groonga as ones for Grnline. For example,
+you execute Groonga with a new database:
 
-    $ grnline -n <groonga-db>
+    $ grnline -n <Groonga-db>
 
 Then, Grnline has the own options. Please see ```grnline -- -h```.
-When you want to know groonga's options, please type ```grnline -h```.
+When you want to know Groonga's options, please type ```grnline -h```.
 
 ## Author
 
