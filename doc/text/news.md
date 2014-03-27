@@ -1,5 +1,55 @@
 # News
 
+## <a id="0-0-4">0.0.4</a>: 2014-03-28
+
+### Implements
+
+* Showed lazy pretty print JSON responses.
+  Using lazy pretty print, short arrays are shown as the line, and values in hashes are align verticaly.
+
+e.g.) a response of status command.
+Before:
+
+```
+[
+  [
+    0,
+    1369743525.62977,
+    9.20295715332031e-05
+  ],
+  {
+    "alloc_count":129,
+    "starttime":1369743522,
+    "uptime":3,
+    "version":"3.0.1",
+    "n_queries":0,
+    "cache_hit_rate":0.0,
+    "command_version":1,
+    "default_command_version":1,
+    "max_command_version":2
+  }
+]
+```
+
+After:
+
+```
+[
+  [0, 1369743525.62977, 9.20295715332031e-05],
+  {
+    "alloc_count"            :129,
+    "starttime"              :1369743522,
+    "uptime"                 :3,
+    "version"                :"3.0.1",
+    "n_queries"              :0,
+    "cache_hit_rate"         :0.0,
+    "command_version"        :1,
+    "default_command_version":1,
+    "max_command_version"    :2
+  }
+]
+```
+
 ## <a id="0-0-3">0.0.3</a>: 2013-11-23
 
 ### Improvements
