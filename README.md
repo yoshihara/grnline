@@ -26,6 +26,11 @@ you execute Groonga with a new database:
 Then, Grnline has the own options. Please see ```grnline -- -h```.
 When you want to know Groonga's options, please type ```grnline -h```.
 
+## Depedencies
+
+  * Ruby >= 1.9.3
+  * Groonga
+
 ## Author
 
 Haruka Yoshihara (yshr04hrk at gmail.com)
