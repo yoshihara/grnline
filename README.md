@@ -33,7 +33,7 @@ When you want to know Groonga's options, please type ```grnline -h```.
 
 ## Author
 
-Haruka Yoshihara (yshr04hrk at gmail.com)
+Haruka Yoshihara (h.yoshihara@everyleaf.com)
 
 ## Contributing
 
